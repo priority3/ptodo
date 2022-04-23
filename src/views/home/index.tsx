@@ -6,7 +6,7 @@ export default defineComponent({
   components: {},
   setup(props, ctx) {
     // console.log('this is test')
-    console.log(ctx);
+    console.log(props,ctx);
     return () => <div>this is ptodohome</div>
   }
 })

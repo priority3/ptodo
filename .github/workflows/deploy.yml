@@ -15,11 +15,10 @@ jobs:
         with:
           node-version: '14.x'
 
-      - name: Install
-        run: npm install # 安装依赖
-
-      - name: Build
-        run: npm run build # 打包
+      - name: Install Dependencies # name 定义步骤的名称，这个可以在该 Action 运行起来之后，在 Github Actions Tab 下看到
+        run: | # `run: |` 的方式，允许我们一次定义多个要执行的命令
+          npm install
+          npm run build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3 # 使用部署到 GitHub pages 的 action
