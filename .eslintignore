@@ -1,3 +1,15 @@
-/dist
+
+*.sh
 node_modules
-public
+*.md
+*.woff
+*.ttf
+.vscode
+.idea
+dist
+/public
+/docs
+.husky
+.local
+/bin
+Dockerfile
