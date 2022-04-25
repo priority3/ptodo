@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import { emitMsg } from '../../utils/bus'
+import { emitMsg } from '/@/utils/bus'
 
 export default defineComponent({
   props: {},
