@@ -1,12 +1,7 @@
 import { defineComponent } from 'vue'
-// import { RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 export default defineComponent({
   setup() {
-    // return () => <RouterView />
-    return () => (
-      <div>
-        this is test 
-      </div>
-    )
+    return () => <RouterView />
   }
 })
