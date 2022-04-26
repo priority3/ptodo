@@ -2,14 +2,13 @@ import PRIRequest from '/@/utils/http'
 import type { testRequest, testResponse } from './model/testModel'
 
 enum API {
-  testApi = '/api/common/weather/get15DaysWeatherByArea',
+  testApi = '/basic-api/account/getAccountInfo',
 }
 
-export const get15DaysWeatherByArea = (data: testRequest) => {
+export const getTestApi = () => {
   return PRIRequest<testRequest, testResponse>({
     url: API.testApi,
     method: 'GET',
-    data,
     interceptors: {
       requestInterceptors(res) {
         console.log('接口请求拦截')

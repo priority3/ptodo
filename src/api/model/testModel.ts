@@ -1,11 +1,15 @@
-export interface testRequest {
-  apiKey: string
-  area?: string
-  areaID?: string
-}
+export interface testRequest {}
 export interface testResponse {
-  area: string
-  areaCode: string
-  areaid: string
-  dayList: any[]
+  name: string
+  userid: string
+  signature: string
+  introduction: string
+  title: string
+  group: string
+  tags: Array<object>
+  notifyCount: number
+  unreadCount: number
+  country: string
+  address: string
+  phone: string
 }
