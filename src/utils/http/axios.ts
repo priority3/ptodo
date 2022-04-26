@@ -30,7 +30,10 @@ class Request {
     this.interceptorsObj = config.interceptors
     // 拦截器执行顺序 接口请求 -> 实例请求 -> 全局请求 -> 实例响应 -> 全局响应 -> 接口响应
     this.instance.interceptors.request.use(
-      (res: AxiosRequestConfig) => res,
+      (res: AxiosRequestConfig) => {
+        console.log('全局请求拦截')
+        return res
+      },
       (err: any) => err,
     )
 
@@ -47,6 +50,8 @@ class Request {
     this.instance.interceptors.response.use(
       // 因为我们接口的数据都在res.data下，所以我们直接返回res.data
       (res: AxiosResponse) => {
+        console.log('全局响应拦截')
+
         return res.data
       },
       (err: any) => err,

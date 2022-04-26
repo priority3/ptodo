@@ -1,33 +1,49 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-// 如果编辑器提示 path 模块找不到，则可以安装一下 @types/node -> npm i @types/node -D
+import type { UserConfig, ConfigEnv } from 'vite'
+import { loadEnv } from 'vite'
+import { wrapperEnv } from './build/utils'
+// import { OUTPUT_DIR } from './build/constant'
+import { createVitePlugins } from './build/vite/plugin'
+// 如果编辑器提示 path 模块找不到，则可以安装一下 @types/node -> pnpm i @types/node -D
 import { resolve } from 'path'
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
 }
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue(), vueJsx()],
-  resolve: {
-    alias: {
-      '/@/': pathResolve('src') + '/' // 设置 `@` 指向 `src` 目录
-    }
-  },
-  base: './', // 设置打包路径
-  server: {
-    port: 4000, // 设置服务启动端口号
-    host:'::',
-    open: true, // 设置服务启动时是否自动打开浏览器
-    cors: true // 允许跨域
-    // 设置代理，根据我们项目实际情况配置
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://xxx.xxx.xxx.xxx:8000',
-    //     changeOrigin: true,
-    //     secure: false,
-    //     rewrite: (path) => path.replace('/api/', '/')
-    //   }
-    // }
+
+export default ({ command, mode }: ConfigEnv): UserConfig => {
+  const root = process.cwd()
+  const env = loadEnv(mode, root)
+  const viteEnv = wrapperEnv(env)
+
+  const { VITE_PORT, VITE_PUBLIC_PATH } = viteEnv
+  const isBuild = command === 'build'
+  return {
+    base: VITE_PUBLIC_PATH,
+    root,
+    resolve: {
+      alias: {
+        '/@/': pathResolve('src') + '/',
+      },
+    },
+    server: {
+      host: true,
+      port: VITE_PORT,
+      open: true, // 设置服务启动时是否自动打开浏览器
+      cors: true, // 允许跨域
+    },
+    // build: {
+    //   target: 'es2015',
+    //   outDir: OUTPUT_DIR,
+    //   terserOptions: {
+    //     compress: {
+    //       keep_infinity: true,
+    //       // Used to delete console in production environment
+    //       drop_console: VITE_DROP_CONSOLE,
+    //     },
+    //   },
+    //   // Turning off brotliSize display can slightly reduce packaging time
+    //   brotliSize: false,
+    //   chunkSizeWarningLimit: 2000,
+    // },
+    plugins: createVitePlugins(viteEnv, isBuild),
   }
-})
+}

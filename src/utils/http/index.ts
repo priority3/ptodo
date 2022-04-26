@@ -3,14 +3,19 @@ import { AxiosResponse } from 'axios'
 
 import type { RequestConfig } from './types'
 
-export interface YWZResponse<T> {
-  statusCode: number
+export interface PRIResponse<T> {
+  code: number
   desc: string
   result: T
 }
 
 // 重写返回类型
-interface YWZRequestConfig<T, R> extends RequestConfig<YWZResponse<R>> {
+/**
+ * T 请求参数
+ * D 响应结构
+ */
+interface PRIRequestConfig<T, R> extends RequestConfig<PRIResponse<R>> {
+  // data 可取 某些请求不需要携带data
   data?: T
 }
 
@@ -32,15 +37,15 @@ const request = new Request({
  * @description: 函数的描述
  * @generic D 请求参数
  * @generic T 响应结构
- * @param {YWZRequestConfig} config 不管是GET还是POST请求都使用data
+ * @param {PRIRequestConfig} config 不管是GET还是POST请求都使用data
  * @returns {Promise}
  */
-const ywzRequest = <D = any, T = any>(config: YWZRequestConfig<D, T>) => {
+const PRIRequest = <D = any, T = any>(config: PRIRequestConfig<D, T>) => {
   const { method = 'GET' } = config
   if (method === 'get' || method === 'GET') {
     config.params = config.data
   }
-  return request.request<YWZResponse<T>>(config)
+  return request.request<PRIResponse<T>>(config)
 }
 // 取消请求
 export const cancelRequest = (url: string | string[]) => {
@@ -51,4 +56,4 @@ export const cancelAllRequest = () => {
   return request.cancelAllRequest()
 }
 
-export default ywzRequest
+export default PRIRequest
