@@ -17,6 +17,12 @@ export interface PRIResponse<T> {
 interface PRIRequestConfig<T, R> extends RequestConfig<PRIResponse<R>> {
   // data 可取 某些请求不需要携带data
   data?: T
+  // 上传文件
+  isUploadFile?: boolean
+  // 下载文件
+  isDownloadFile?: boolean
+  // header
+  header?: object
 }
 
 const request = new Request({
@@ -45,6 +51,7 @@ const PRIRequest = <D = any, T = any>(config: PRIRequestConfig<D, T>) => {
   if (method === 'get' || method === 'GET') {
     config.params = config.data
   }
+
   return request.request<PRIResponse<T>>(config)
 }
 // 取消请求

@@ -31,7 +31,9 @@ class Request {
     // 拦截器执行顺序 接口请求 -> 实例请求 -> 全局请求 -> 实例响应 -> 全局响应 -> 接口响应
     this.instance.interceptors.request.use(
       (res: AxiosRequestConfig) => {
-        console.log('全局请求拦截')
+        res = this.rebuildHeader(res)
+        console.log('this is 全局拦截器', res)
+
         return res
       },
       (err: any) => err,
@@ -85,6 +87,7 @@ class Request {
       if (config.interceptors?.requestInterceptors) {
         config = config.interceptors.requestInterceptors(config)
       }
+
       const url = config.url
       // url存在保存取消请求方法和当前请求url
       if (url) {
@@ -134,6 +137,17 @@ class Request {
       const key = Object.keys(source)[0]
       source[key]()
     })
+  }
+  rebuildHeader(config: AxiosRequestConfig) {
+    // token
+
+    // 上传
+    // @ts-ignore
+    if (config.data && config.isUploadFile) {
+      ;(config as Recordable).headers['Content-type'] = 'multipart/form-data'
+    }
+
+    return config
   }
 }
 

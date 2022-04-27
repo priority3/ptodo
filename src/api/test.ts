@@ -5,9 +5,11 @@ enum API {
   testApi = '/basic-api/account/getAccountInfo',
 }
 
-export const getTestApi = () => {
+export const getTestApi = (data: testRequest) => {
   return PRIRequest<testRequest, testResponse>({
     url: API.testApi,
+    isUploadFile: true,
+    data,
     method: 'GET',
     interceptors: {
       requestInterceptors(res) {
