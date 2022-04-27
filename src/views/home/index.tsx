@@ -7,7 +7,9 @@ export default defineComponent({
   components: {},
   setup(props, ctx) {
     // emitMsg('test','123')
-    getTestApi().then((res) => {
+    getTestApi({
+      name: '2',
+    }).then((res) => {
       console.log(res)
     })
     return () => <div class="app-container">this is ptodohome</div>
