@@ -10,10 +10,12 @@ pnpm install
 
 > 代码 commit 校验
 >
-> mock
+> test
 
 ### 完成
 
 > axios 封装 api
 >
 > mitt 重写
+>
+> mock
