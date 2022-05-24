@@ -1,21 +1,5 @@
-# Vue 3 + TypeScript + Vite + pinia
+## ptodo
+其实不知道具体要做出个什么东西，应该会是一个类似的**todolist**,但是我觉得应该不会局限有只是一个简单的todolist,想要给他赋予更多的可能。
 
-简单框架使用
-
-```ssh
-pnpm install
-```
-
-### 未完善：
-
-> 代码 commit 校验
->
-> test
-
-### 完成
-
-> axios 封装 api
->
-> mitt 重写
->
-> mock
+### 技术栈：
+> vue3、ts、......
